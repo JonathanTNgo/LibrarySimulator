@@ -37,6 +37,15 @@ public abstract class LibraryObject {
         return check_out(1);
     }
 
+
+    // Unsure if unnecessary to return status code since it is always possible to add
+    public ActionStatus add_copies(int copies) {
+        total_copies += copies;
+        avaliable_copies += copies;
+        return ActionStatus.SUCCESS;
+    }
+
+
     public ActionStatus remove(int out) {
         if (avaliable_copies < out) {
             return ActionStatus.INSUFFICENT_COPIES;

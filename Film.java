@@ -24,6 +24,6 @@ public class Film extends LibraryObject {
 
     @Override
     public String toString() {
-        return super.get_title() + " (" + release_year + ")" + " by " + director + ".";
+        return super.get_title() + " (" + release_year + ")" + " by " + director + ". Avaliable copies: " + super.get_avaliable_copies() + " out of " + super.get_total_copies();
     }
 }
