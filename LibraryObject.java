@@ -11,10 +11,10 @@ public abstract class LibraryObject {
     }
 
 
-    public LibraryObject(String title, int id, int avaliable_copies) {
+    public LibraryObject(String title, int id, int total_copies) {
         this.title = title;
         this.id = id;
-        this.avaliable_copies = total_copies = avaliable_copies;
+        this.total_copies = avaliable_copies = total_copies;
     }
     
     
