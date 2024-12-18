@@ -1,19 +1,21 @@
 public abstract class LibraryObject {
+    private static int nextObjectID = 1;
+
     private String title;
     private int id;
     private int total_copies;
     private int avaliable_copies;
 
-    public LibraryObject(String title, int id) {
+    public LibraryObject(String title) {
         this.title = title;
-        this.id = id;
+        id = nextObjectID++;
         total_copies = avaliable_copies = 1;
     }
 
 
-    public LibraryObject(String title, int id, int total_copies) {
+    public LibraryObject(String title, int total_copies) {
         this.title = title;
-        this.id = id;
+        id = nextObjectID++;
         this.total_copies = avaliable_copies = total_copies;
     }
     

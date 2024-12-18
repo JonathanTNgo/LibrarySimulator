@@ -1,17 +1,15 @@
 public class Film extends LibraryObject {
-    private static int nextFilmID = 1;
-
     private String director;
     private int release_year;
 
     public Film(String title, String director, int release_year) {
-        super(title, nextFilmID++);
+        super(title);
         this.director = director;
         this.release_year = release_year;
     }
 
     public Film(String title, String director, int release_year, int total_copies) {
-        super(title, nextFilmID++, total_copies);
+        super(title, total_copies);
         this.director = director;
         this.release_year = release_year;
     }
