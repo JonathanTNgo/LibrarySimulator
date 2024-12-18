@@ -3,13 +3,13 @@ public class Film extends LibraryObject {
     private int release_year;
 
     public Film(String title, String director, int release_year) {
-        super(title);
+        super(title, LibraryType.FILM);
         this.director = director;
         this.release_year = release_year;
     }
 
     public Film(String title, String director, int release_year, int total_copies) {
-        super(title, total_copies);
+        super(title, total_copies, LibraryType.FILM);
         this.director = director;
         this.release_year = release_year;
     }

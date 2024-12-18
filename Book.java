@@ -3,13 +3,13 @@ public class Book extends LibraryObject {
     private String publisher;
     
     public Book(String title, String author, String publisher) {
-        super(title);
+        super(title, LibraryType.BOOK);
         this.author = author;
         this.publisher = publisher;
     }
 
     public Book(String title, String author, String publisher, int total_copies) {
-        super(title, total_copies);
+        super(title, total_copies, LibraryType.BOOK);
         this.author = author;
         this.publisher = publisher;
     }

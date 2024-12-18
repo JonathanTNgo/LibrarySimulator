@@ -5,16 +5,19 @@ public abstract class LibraryObject {
     private int id;
     private int total_copies;
     private int avaliable_copies;
+    private LibraryType type;
 
-    public LibraryObject(String title) {
+    public LibraryObject(String title, LibraryType type) {
         this.title = title;
+        this.type = type;
         id = nextObjectID++;
         total_copies = avaliable_copies = 1;
     }
 
 
-    public LibraryObject(String title, int total_copies) {
+    public LibraryObject(String title, int total_copies, LibraryType type) {
         this.title = title;
+        this.type = type;
         id = nextObjectID++;
         this.total_copies = avaliable_copies = total_copies;
     }
@@ -44,12 +47,14 @@ public abstract class LibraryObject {
         }
     }
 
+    public LibraryType return_type() {
+        return type;
+    }
 
     public String get_title() {
         return title;
     }
 
-    
     public int get_id() {
         return id;
     }
@@ -63,7 +68,5 @@ public abstract class LibraryObject {
     }
 
     @Override
-    public String toString() {
-        return title + ", " + id;
-    }
+    public abstract String toString();
 }
