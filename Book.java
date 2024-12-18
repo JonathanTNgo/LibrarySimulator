@@ -1,15 +1,17 @@
 public class Book extends LibraryObject {
+    private static int nextBookID = 1;
+
     private String author;
     private String publisher;
     
-    public Book(String title, int id, String author, String publisher) {
-        super(title, id);
+    public Book(String title, String author, String publisher) {
+        super(title, nextBookID++);
         this.author = author;
         this.publisher = publisher;
     }
 
-    public Book(String title, int id, String author, String publisher, int total_copies) {
-        super(title, id, total_copies);
+    public Book(String title, String author, String publisher, int total_copies) {
+        super(title, nextBookID++, total_copies);
         this.author = author;
         this.publisher = publisher;
     }
