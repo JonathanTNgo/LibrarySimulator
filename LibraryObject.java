@@ -47,7 +47,7 @@ public abstract class LibraryObject {
         }
     }
 
-    public LibraryType return_type() {
+    public LibraryType get_type() {
         return type;
     }
 
