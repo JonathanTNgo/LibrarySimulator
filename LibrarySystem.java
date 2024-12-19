@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class LibrarySystem {
     // Map used because LibraryObjects will be searched via their unique IDs
@@ -85,6 +86,45 @@ public class LibrarySystem {
                 toSearch.add(film);
             }
         }
+
+        public void viewObjectByID(int id) {
+            Optional<LibraryObject> result = getObjectByID(id);
+            if (result.isPresent()) System.out.println(result.get());
+        }
+        
+        public Optional<LibraryObject> getObjectByID(int id) {
+            return Optional.ofNullable(libraryByID.get(id));
+        }
+
+        public Optional<List<LibraryObject>> getObjectByName(String name) {
+            return Optional.ofNullable(libraryByName.get(name));
+        }
+
+        public void deleteSomeObjectByID(int id, int count) {
+            if (libraryByID.get(id).remove(count) == ActionStatus.INSUFFICENT_COPIES) {
+                deleteObjectByID(id);
+            }
+        }
+
+        public void deleteObjectByID(int id) {
+            if (libraryByID.get(id) == null) {
+                System.out.println("Item does not exist.");
+            } else {
+                LibraryObject toDelete = libraryByID.get(id);
+                libraryByID.remove(id);
+
+                // Since object exists, delete it from libraryByName
+                List<LibraryObject> toSearch = libraryByName.get(toDelete.get_title());
+                for (int i = 0; i < toSearch.size(); i++) {
+                    if (toSearch.get(i).get_id() == id) {
+                        toSearch.remove(i);
+                        return;
+                    }
+                }
+                
+                System.out.println("This message shouldn't be printed out (deleteObjectByID)");
+            }
+        } 
 
         public void viewLibrary() {
             libraryByID.forEach((id, object) -> System.out.println(object));
