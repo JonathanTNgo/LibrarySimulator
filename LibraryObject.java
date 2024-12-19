@@ -47,7 +47,7 @@ public abstract class LibraryObject {
 
 
     public ActionStatus remove(int out) {
-        if (avaliable_copies < out) {
+        if (avaliable_copies <= out) {
             return ActionStatus.INSUFFICENT_COPIES;
         } else {
             avaliable_copies -= out;

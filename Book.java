@@ -24,6 +24,6 @@ public class Book extends LibraryObject {
 
     @Override
     public String toString() {
-        return super.get_title() + " by " + author + ". Published by " + publisher + ". Avaliable copies: " + super.get_avaliable_copies() + " out of " + super.get_total_copies();
+        return super.get_title() + " (ID: " + super.get_id() + ") by " + author + ". Published by " + publisher + ". Avaliable copies: " + super.get_avaliable_copies() + " out of " + super.get_total_copies();
     }
 }
