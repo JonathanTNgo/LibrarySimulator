@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.swing.Action;
+
 public class LibrarySystem {
     // Map used because LibraryObjects will be searched via their unique IDs
         Map<Integer, LibraryObject> libraryByID = new HashMap<>();
         Map<String, List<LibraryObject>> libraryByName = new HashMap<>();
         // Map used because customers will be searched via their names
-        // List is used in case of duplicate names (IDs still unique)
-        Map<String, List<Customer>> customersByName = new HashMap<>();
-        // Map used because loans will be searched by customer IDs (the loanee)
-        Map<Integer, Loan> loans = new HashMap<>();
+        Map<String, Customer> customersByName = new HashMap<>();
+        // Map used because loans will be searched by customer names (the loanee)
+        Map<String, List<Loan>> loans = new HashMap<>();
         
 
         // Methods for interacting with Library (inventory)
@@ -137,9 +138,110 @@ public class LibrarySystem {
 
 
         // Methods for interacting with Customers
+        // View all Customers
+        public void viewAllCustomers() {
+            customersByName.forEach((id, object) -> System.out.println(object));
+        }
 
+        // View singular customer by name
+        public void viewCustomer(String name) {
+            if (customersByName.get(name) == null) {
+                System.out.println("No customer of name, " + name + ", exists.");
+            } else {
+                System.out.println(customersByName.get(name));
+            }
+        }
 
+        // Create new customer
+        public ActionStatus addCustomer(String name) {
+            if (customersByName.get(name) == null) {
+                customersByName.put(name, new Customer(name));
+                return ActionStatus.SUCCESS;
+            } else {
+                return ActionStatus.NOT_AVAILABLE;
+            }
+        }
 
+        // Delete customer if they do not have any outstanding loans
+        public ActionStatus deleteCustomer(String name) {
+            Customer curr = customersByName.get(name);
+            if (curr == null) {
+                return ActionStatus.NOT_AVAILABLE;
+            } else {
+                // Customer exists, only delete if that customer has no loans
+                if (loans.get(curr.get_id()) == null) {
+                    customersByName.remove(name);
+                    return ActionStatus.SUCCESS;
+                } else {
+                    System.out.println("Customer cannot be deleted, they have an outstanding loan.");
+                    return ActionStatus.NOT_AVAILABLE;
+                }
+            }
+        }
+
+        // Check if a customer exists
+        public boolean doesCustomerExist(String name) {
+            return (customersByName.get(name) == null);
+        }
+        
 
         // Methods for interacting with Loans
+        // View all loans
+        public void viewAllLoans() {
+            loans.forEach((id, object) -> System.out.println(object));
+        }
+
+        // View loan(s) for 1 customer
+        public void viewLoan(String customerName) {
+            List<Loan> curr = loans.get(customerName);
+            if (curr == null) {
+                System.out.println(customerName + " has not outstanding loans.");
+                return;
+            }
+
+            // print each loans in list
+            curr.forEach((object) -> System.out.println(object));
+        }
+
+
+        // Make new loan
+        public ActionStatus addLoan(String customerName, int libraryObjectID) {
+            if (!doesCustomerExist(customerName)) {
+                System.out.println("Customer does not exist.");
+                return ActionStatus.NOT_AVAILABLE;
+            }
+
+            // Check if they have any outstanding loans
+            List<Loan> curr = loans.get(customerName);
+            if (curr == null) {
+                ArrayList<Loan> temp = new ArrayList<>();
+                temp.add(new Loan(customerName, libraryObjectID));
+                loans.put(customerName, temp);
+            } else {
+                curr.add(new Loan (customerName, libraryObjectID));
+            }
+
+            return ActionStatus.SUCCESS;
+        }
+
+        // Delete a loan
+        public ActionStatus deleteLoan(String customerName, int loanID) {
+            List<Loan> curr = loans.get(customerName);
+            if (curr == null) {
+                System.out.println("Customer has no outstanding loands");
+                return ActionStatus.NOT_AVAILABLE;
+            }
+
+            // Find loanID and remove it
+            for (int i = 0; i < curr.size(); i++) {
+                if (curr.get(i).get_loan_id() == loanID) {
+                    curr.remove(i);
+                    System.out.println("Loan removed.");
+                    return ActionStatus.SUCCESS;
+                }
+            }
+
+            System.out.println("Loan does not exist.");
+            return ActionStatus.NOT_AVAILABLE;
+        }
 }
