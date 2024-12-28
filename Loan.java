@@ -2,12 +2,12 @@ public class Loan {
     private static int nextLoanID = 1;
 
     private int loanID;
-    private int customerID;
+    private String customerName;
     private int objectID;
 
-    public Loan(int customerID, int objectID) {
+    public Loan(String customerName, int objectID) {
         loanID = nextLoanID++;
-        this.customerID = customerID;
+        this.customerName = customerName;
         this.objectID = objectID;
     }
 
@@ -15,8 +15,8 @@ public class Loan {
         return loanID;
     }
 
-    public int get_customer_id() {
-        return customerID;
+    public String get_customer_name() {
+        return customerName;
     }
 
     public int get_object_id() {
@@ -25,6 +25,6 @@ public class Loan {
 
     @Override
     public String toString() {
-        return "Loan: " + loanID + " of " + objectID + " from " + customerID + ".";
+        return "Loan: " + loanID + " of " + objectID + " from " + customerName + ".";
     }
 }
