@@ -16,4 +16,9 @@ public class Customer {
     public int get_id() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return name + " ID: " + id;
+    }
 }
