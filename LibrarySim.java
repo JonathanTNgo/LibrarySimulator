@@ -63,55 +63,112 @@ public class LibrarySim {
                 }
                  // Add film
                 case 2 -> {
-                    System.out.println("2");
+                    System.out.print("Enter the films's title: ");
+                    String title = getString(scanner);
+
+                    System.out.print("Enter the film's director: ");
+                    String director = getString(scanner);
+
+                    System.out.print("Enter the film's release year: ");
+                    int year = getInt(scanner);
+
+                    System.out.print("Enter the number of copies to add: ");
+                    int copies = getInt(scanner);
+
+                    library.addFilm(title, director, year, copies);
                 }
 
+                // View an object by ID
                 case 3 -> {
-                    System.out.println("1");
+                    System.out.print("Enter the ID of the object you are trying to view: ");
+                    int id = getInt(scanner);
+
+                    library.viewObjectByID(id);
                 }
 
+                // View entire library (by ID)
                 case 4 -> {
-                    System.out.println("2");
+                    library.viewLibrary();
                 }
                 
+                // View entire library (by Name)
                 case 5 -> {
-                    System.out.println("1");
+                    library.viewLibraryByName();
                 }
 
                 case 6 -> {
-                    System.out.println("2");
+                    System.out.print("Enter the ID of the object you are trying to delete: ");
+                    int id = getInt(scanner);
+
+                    System.out.print("Enter the number of copies you wish to remove: ");
+                    int copies = getInt(scanner);
+
+                    if (copies <= 0) {
+                        break;
+                    }
+
+                    library.deleteSomeObjectByID(id, copies);
                 }
 
+                // Add customer
                 case 7 -> {
-                    System.out.println("1");
+                    System.out.print("Enter the name of the customer you want created: ");
+                    String name = getString(scanner);
+
+                    if (library.addCustomer(name) == ActionStatus.NOT_AVAILABLE) {
+                        System.out.println("Customer name already exists.");
+                    }
                 }
 
+                // Delete customer
                 case 8 -> {
-                    System.out.println("2");
-                }
+                    System.out.println("Warning: You won't be able to delete a customer with outstanding loans");
+                    System.out.print("Enter the name of the customer you want deleted: ");
+                    String name = getString(scanner);
 
+                    if (library.deleteCustomer(name) == ActionStatus.NOT_AVAILABLE) {
+                        System.out.println("Customer could not be succesfully deleted");
+                    }
+                }
+                
+                // View all customers
                 case 9 -> {
-                    System.out.println("1");
+                    library.viewAllCustomers();
                 }
 
+                // View a customer's outstanding loans
                 case 10 -> {
-                    System.out.println("2");
+                    System.out.print("Enter the name of the customer whose loans you want to view: ");
+                    String name = getString(scanner);
+
+                    library.viewLoan(name);
                 }
 
+                // Add a loan
                 case 11 -> {
-                    System.out.println("1");
+                    System.out.print("Enter the name of the loanee (customer name): ");
+                    String name = getString(scanner);
+
+                    System.out.print("Enter the Object ID of whats being loaned: ");
+                    int id = getInt(scanner);
+
+                    if (library.addLoan(name, id) == ActionStatus.NOT_AVAILABLE) System.out.println("Loan was not succesfully created.");
                 }
 
+                // View all Loans
                 case 12 -> {
-                    System.out.println("2");
+                    library.viewAllLoans();
                 }
 
+                // Delete a loan
                 case 13 -> {
-                    System.out.println("1");
-                }
+                    System.out.print("Enter the name of the customer whose loan you want deleted: ");
+                    String name = getString(scanner);
 
-                case 14 -> {
-                    System.out.println("2");
+                    System.out.print("Enter the ID of the loan you want deleted: ");
+                    int id = getInt(scanner);
+
+                    if (library.deleteLoan(name, id) == ActionStatus.NOT_AVAILABLE) System.out.println("Loan was not succesfully deleted.");
                 }
 
                 default -> {
