@@ -8,7 +8,9 @@ Purpose: Simulate a small-scale library system with customer-interaction.
 
 Functionality: 
     - Add/Delete/View Library objects
+	
     - Add/Delete/View Customers (loanees)
+	
     - Add/Delete/View Loans (IE. Customers checking out library objects)
 
 Additional Infomation:
@@ -16,6 +18,7 @@ Additional Infomation:
 
 Optional Improvements:
     - Factory interface to handle the creation of new LibraryObjects, to help scale application
+	
     - Better distinction of SOUT between librarySim and LibrarySystem (Some functions will print, others will return ActionStatus enum instead)
 
 
