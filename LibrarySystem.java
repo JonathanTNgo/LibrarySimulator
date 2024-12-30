@@ -21,6 +21,10 @@ public class LibrarySystem {
 
         // -- Future improvement: LibraryObjectFactory for better scalability
         public void addBook(String title, String author, String publisher, int total_copies) {
+            if (total_copies <= 0) {
+                return;
+            }
+
             List<LibraryObject> toSearch = libraryByName.get(title);
 
             // Object doesn't exist by name, brand new object
@@ -55,6 +59,10 @@ public class LibrarySystem {
         }
 
         public void addFilm(String title, String director, int release_year, int total_copies) {
+            if (total_copies <= 0) {
+                return;
+            }
+            
             List<LibraryObject> toSearch = libraryByName.get(title);
 
             // Object doesn't exist by name, brand new object
@@ -102,8 +110,20 @@ public class LibrarySystem {
         }
 
         public void deleteSomeObjectByID(int id, int count) {
-            if (libraryByID.get(id).remove(count) == ActionStatus.INSUFFICENT_COPIES) {
+            // Deletes entire object if we are trying to delete MORE than the objects avaliable copies
+            // Delete entire object if we are trying to delete more than total copies AND avaliable copies == total copies
+            LibraryObject curr = libraryByID.get(id);
+            if (curr.get_total_copies() == curr.get_avaliable_copies() && count >= curr.get_total_copies()) {
                 deleteObjectByID(id);
+                return;
+            }
+
+            // Try to remove (count) copies from Object total count.
+            // If count > object.avaliable_copies, do NOT remove any copies, error to user.
+            // If count < object.avaliable_copies, .remove will decrement object's total and avaliable copies by (count)
+            if (libraryByID.get(id).remove(count) == ActionStatus.INSUFFICENT_COPIES) {
+                System.out.println("Error: You are trying to delete more copies than avaliable. Copies are being loaned out still.");
+                return;
             }
         }
 
@@ -169,7 +189,7 @@ public class LibrarySystem {
                 return ActionStatus.NOT_AVAILABLE;
             } else {
                 // Customer exists, only delete if that customer has no loans
-                if (loans.get(curr.get_id()) == null) {
+                if (loans.get(curr.get_name()) == null) {
                     customersByName.remove(name);
                     return ActionStatus.SUCCESS;
                 } else {
@@ -181,7 +201,7 @@ public class LibrarySystem {
 
         // Check if a customer exists
         public boolean doesCustomerExist(String name) {
-            return (customersByName.get(name) == null);
+            return (customersByName.get(name) != null);
         }
         
 
@@ -206,8 +226,22 @@ public class LibrarySystem {
 
         // Make new loan
         public ActionStatus addLoan(String customerName, int libraryObjectID) {
+            // Check if customer exists
             if (!doesCustomerExist(customerName)) {
-                System.out.println("Customer does not exist.");
+                System.out.println("Customer of name: " + customerName + " does not exist.");
+                return ActionStatus.NOT_AVAILABLE;
+            }
+
+            // Check if library object exists
+            LibraryObject curr_object = libraryByID.get(libraryObjectID);
+            if (curr_object == null) {
+                System.out.println("Library object with id: " + libraryObjectID + " does not exist.");
+                return ActionStatus.NOT_AVAILABLE;
+            }
+
+            // Check if object has enough copies
+            if (curr_object.check_out(1) == ActionStatus.INSUFFICENT_COPIES) {
+                System.out.println("Insufficent copies to checkout object of ID: " + libraryObjectID + ".");
                 return ActionStatus.NOT_AVAILABLE;
             }
 
