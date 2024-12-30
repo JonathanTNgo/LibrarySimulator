@@ -15,6 +15,7 @@ Functionality:
 
 Additional Infomation:
     - You can extend off of LibraryObject, but you will have to add a add(BLANK) function to LibrarySystem.java
+    
 
 Optional Improvements:
     - Factory interface to handle the creation of new LibraryObjects, to help scale application
