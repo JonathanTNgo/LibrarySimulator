@@ -1,11 +1,8 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import javax.swing.Action;
 
 public class LibrarySystem {
     // Map used because LibraryObjects will be searched via their unique IDs
@@ -15,7 +12,6 @@ public class LibrarySystem {
         Map<String, Customer> customersByName = new HashMap<>();
         // Map used because loans will be searched by customer names (the loanee)
         Map<String, List<Loan>> loans = new HashMap<>();
-        
 
         // Methods for interacting with Library (inventory)
 
@@ -156,7 +152,6 @@ public class LibrarySystem {
         }
 
 
-
         // Methods for interacting with Customers
         // View all Customers
         public void viewAllCustomers() {
@@ -222,7 +217,6 @@ public class LibrarySystem {
             // print each loans in list
             curr.forEach((object) -> System.out.println(object));
         }
-
 
         // Make new loan
         public ActionStatus addLoan(String customerName, int libraryObjectID) {
