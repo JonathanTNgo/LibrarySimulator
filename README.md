@@ -6,6 +6,10 @@ This console application was created by https://github.com/JonathanTNgo
 
 Purpose: Simulate a small-scale library system with customer-interaction.
 
+How-to:
+
+	- Run the main function in LibrarySim.java
+
 Functionality: 
     
     - Add/Delete/View Library objects
